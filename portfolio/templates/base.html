@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="{{ current_language|default:'en' }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>   Enosh Peter Ponraj</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👦🏻</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/retro.css' %}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+  <div class="crt-screen">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="top-bar-left">
+        {% if profile %}
+          {% if profile.cv_file %}
+            <a href="{{ profile.cv_file.url }}" class="btn-pixel" download>
+              <span class="icon">💾</span> CV
+            </a>
+          {% endif %}
+          {% if profile.linkedin_url %}
+            <a href="{{ profile.linkedin_url }}" target="_blank" class="btn-pixel" rel="noopener noreferrer">
+              <span class="icon">🔗</span> LinkedIn
+            </a>
+          {% endif %}
+          {% if profile.github_url %}
+            <a href="{{ profile.github_url }}" target="_blank" class="btn-pixel" rel="noopener noreferrer">
+              <img src="{% static 'images/github-icon.svg' %}" alt="GitHub" class="icon github-icon-img" style="width: 16px; height: 16px; vertical-align: middle;">
+              GitHub
+            </a>
+          {% endif %}
+        {% endif %}
+      </div>
+      <div class="top-bar-center">
+        <h1 class="site-title">Enosh Peter Ponraj</h1>
+      </div>
+      <div class="top-bar-right">
+        <div class="language-switcher">
+          <a href="?lang=en{% if current_category %}&category={{ current_category }}{% endif %}" 
+             class="btn-lang {% if current_language == 'en' %}active{% endif %}">EN</a>
+          <a href="?lang=de{% if current_category %}&category={{ current_category }}{% endif %}" 
+             class="btn-lang {% if current_language == 'de' %}active{% endif %}">DE</a>
+          <a href="?lang=ta{% if current_category %}&category={{ current_category }}{% endif %}" 
+             class="btn-lang {% if current_language == 'ta' %}active{% endif %}">TA</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+      <!-- Left Side: Categories Only -->
+      <nav class="side-nav">
+        {% for category in categories %}
+          <a href="?category={{ category.slug }}{% if current_language %}&lang={{ current_language }}{% endif %}" 
+             class="nav-item {% if current_category == category.slug %}active{% endif %}" 
+             data-category="{{ category.slug }}"
+             data-has-skills="{% if category.skills and category.skills.strip %}true{% else %}false{% endif %}">
+            <span class="nav-icon">{{ category.icon|default:'⚙️' }}</span>
+            <span class="nav-text">{% if current_language == 'de' and category.name_de %}{{ category.name_de }}{% elif current_language == 'ta' and category.name_ta %}{{ category.name_ta }}{% else %}{{ category.name_en }}{% endif %}</span>
+          </a>
+        {% empty %}
+          <!-- Fallback to hardcoded categories if no Category objects exist -->
+          <a href="?category=about-me{% if current_language %}&lang={{ current_language }}{% endif %}" 
+             class="nav-item {% if current_category == 'about-me' %}active{% endif %}" 
+             data-category="about-me"
+             data-has-skills="false">
+            <span class="nav-icon">💾</span>
+            <span class="nav-text">About Me</span>
+          </a>
+          <a href="?category=open-source{% if current_language %}&lang={{ current_language }}{% endif %}" 
+             class="nav-item {% if current_category == 'open-source' %}active{% endif %}" 
+             data-category="open-source"
+             data-has-skills="false">
+            <span class="nav-icon">📦</span>
+            <span class="nav-text">Open Sourced Projects</span>
+          </a>
+          <a href="?category=education{% if current_language %}&lang={{ current_language }}{% endif %}" 
+             class="nav-item {% if current_category == 'education' %}active{% endif %}" 
+             data-category="education"
+             data-has-skills="false">
+            <span class="nav-icon">🎓</span>
+            <span class="nav-text">Education</span>
+          </a>
+          <a href="?category=skills{% if current_language %}&lang={{ current_language }}{% endif %}" 
+             class="nav-item {% if current_category == 'skills' %}active{% endif %}" 
+             data-category="skills"
+             data-has-skills="false">
+            <span class="nav-icon">🛠️</span>
+            <span class="nav-text">Skills</span>
+          </a>
+        {% endfor %}
+      </nav>
+
+      <!-- Right Side: Content and Console -->
+      <div class="right-panel">
+        <!-- Main Content Area -->
+        <main class="main-content">
+          <div class="content-window">
+            {% block content %}{% endblock %}
+          </div>
+        </main>
+
+        <!-- Console Area with Title -->
+        <div class="console-container">
+          <div class="console-title">Terminal</div>
+          <div class="console-area">
+            <div class="console-output" id="console-output">
+              <div class="console-line">C:\>Welcome to Portfolio Terminal</div>
+              <div class="console-line">C:\>Select a category to view skills</div>
+              <div class="console-line">C:\>_</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="{% static 'js/console.js' %}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

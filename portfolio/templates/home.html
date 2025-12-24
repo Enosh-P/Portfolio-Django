@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Portfolio{% endblock %}
+
+{% block content %}
+  {% if content_data.category == 'about-me' %}
+    {# About Me category - show profile #}
+    {% if profile %}
+      <div class="about-me-container">
+        <div class="about-me-content">
+          <h1>{% if current_language == 'de' and profile.title_de %}{{ profile.title_de }}{% elif current_language == 'ta' and profile.title_ta %}{{ profile.title_ta }}{% else %}{{ profile.title_en }}{% endif %}</h1>
+          {% if current_language == 'de' and profile.hero_statement_de %}
+            <p><strong>{{ profile.hero_statement_de }}</strong></p>
+          {% elif current_language == 'ta' and profile.hero_statement_ta %}
+            <p><strong>{{ profile.hero_statement_ta }}</strong></p>
+          {% elif profile.hero_statement_en %}
+            <p><strong>{{ profile.hero_statement_en }}</strong></p>
+          {% endif %}
+          <p>{% if current_language == 'de' and profile.description_de %}{{ profile.description_de|linebreaks }}{% elif current_language == 'ta' and profile.description_ta %}{{ profile.description_ta|linebreaks }}{% else %}{{ profile.description_en|linebreaks }}{% endif %}</p>
+        </div>
+        
+        {% if profile.profile_picture %}
+          <div class="about-me-image">
+            <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="profile-picture">
+          </div>
+        {% endif %}
+      </div>
+    {% else %}
+      <p>Profile content coming soon. Please add a profile in the admin.</p>
+    {% endif %}
+    
+  {% elif content_data.category == 'open-source' %}
+    <h1>Open Sourced Projects</h1>
+    {% if content_data.projects %}
+      {% for project in content_data.projects %}
+        <div class="project-card">
+          <h3>{% if current_language == 'de' and project.title_de %}{{ project.title_de }}{% elif current_language == 'ta' and project.title_ta %}{{ project.title_ta }}{% else %}{{ project.title_en }}{% endif %}</h3>
+          <p>{% if current_language == 'de' and project.description_de %}{{ project.description_de|linebreaks }}{% elif current_language == 'ta' and project.description_ta %}{{ project.description_ta|linebreaks }}{% else %}{{ project.description_en|linebreaks }}{% endif %}</p>
+          <div class="tech-stack">
+            <strong>Tech Stack:</strong> {% if current_language == 'de' and project.tech_stack_de %}{{ project.tech_stack_de }}{% elif current_language == 'ta' and project.tech_stack_ta %}{{ project.tech_stack_ta }}{% else %}{{ project.tech_stack_en }}{% endif %}
+          </div>
+          {% if project.github_url %}
+            <a href="{{ project.github_url }}" target="_blank" class="btn-pixel github-link" style="margin-top: 10px; display: inline-flex; align-items: center; gap: 8px;" rel="noopener noreferrer">
+              <img src="{% static 'images/github-icon.svg' %}" alt="GitHub" class="github-icon-img" style="width: 18px; height: 18px;">
+              <span>GitHub</span>
+            </a>
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>No open source projects available.</p>
+    {% endif %}
+    
+  {% elif content_data.category == 'education' %}
+    <h1>Education</h1>
+    <p>Education content coming soon...</p>
+    
+  {% elif content_data.category == 'skills' %}
+    <h1>Skills</h1>
+    {% if content_data.categories_with_skills %}
+      {% for category in content_data.categories_with_skills %}
+        <h2>{% if current_language == 'de' and category.name_de %}{{ category.name_de }}{% elif current_language == 'ta' and category.name_ta %}{{ category.name_ta }}{% else %}{{ category.name_en }}{% endif %}</h2>
+        <div class="skills-text">
+          {{ category.skills|linebreaks }}
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>No skills available.</p>
+    {% endif %}
+    
+  {% else %}
+    {# Custom categories (cpp-developer, python-developer, ml-engineer, etc.) #}
+    {% if content_data.category_obj %}
+      <h1>{% if current_language == 'de' and content_data.category_obj.name_de %}{{ content_data.category_obj.name_de }}{% elif current_language == 'ta' and content_data.category_obj.name_ta %}{{ content_data.category_obj.name_ta }}{% else %}{{ content_data.category_obj.name_en }}{% endif %}</h1>
+      
+      {# Show projects linked to the profile for this category #}
+      {% if content_data.projects %}
+        {% for project in content_data.projects %}
+          <div class="project-card">
+            <h3>{% if current_language == 'de' and project.title_de %}{{ project.title_de }}{% elif current_language == 'ta' and project.title_ta %}{{ project.title_ta }}{% else %}{{ project.title_en }}{% endif %}</h3>
+            <p>{% if current_language == 'de' and project.description_de %}{{ project.description_de|linebreaks }}{% elif current_language == 'ta' and project.description_ta %}{{ project.description_ta|linebreaks }}{% else %}{{ project.description_en|linebreaks }}{% endif %}</p>
+            <div class="tech-stack">
+              <strong>Tech Stack:</strong> {% if current_language == 'de' and project.tech_stack_de %}{{ project.tech_stack_de }}{% elif current_language == 'ta' and project.tech_stack_ta %}{{ project.tech_stack_ta }}{% else %}{{ project.tech_stack_en }}{% endif %}
+            </div>
+            {% if project.github_url %}
+              <a href="{{ project.github_url }}" target="_blank" class="btn-pixel" style="margin-top: 10px; display: inline-block;" rel="noopener noreferrer">
+                View on GitHub
+              </a>
+            {% endif %}
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No projects available for this category.</p>
+      {% endif %}
+    {% else %}
+      <h1>Category Not Found</h1>
+      <p>The selected category could not be found.</p>
+    {% endif %}
+  {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+{% endblock %}
+
