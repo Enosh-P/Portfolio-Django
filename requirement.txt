@@ -1,0 +1,18 @@
+# Django framework
+Django>=4.3,<5.0
+
+# Database adapters
+# SQLite comes built-in, so no adapter needed for dev
+psycopg2-binary>=2.9   # PostgreSQL adapter for production
+
+# File/image handling
+Pillow>=10.0
+
+# For type hints (optional, helpful for dev)
+django-stubs>=4.3
+
+# For CORS if you plan API calls to be cross-origin
+django-cors-headers>=4.0
+
+# For development convenience
+ipython>=8.0
