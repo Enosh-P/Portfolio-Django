@@ -328,12 +328,6 @@ LANGUAGES = [
 Potential improvements:
 - Implement search functionality
 - Add blog/news section
+- Make it Mobile friendly
 
 ---
-
-## License
-
-This project is open source.
-
----
-
