@@ -21,8 +21,8 @@
     <div class="top-bar">
       <div class="top-bar-left">
         {% if profile %}
-          {% if profile.cv_file %}
-            <a href="{{ profile.cv_file.url }}" class="btn-pixel" download>
+          {% if profile_cv %}
+            <a href="{{ profile_cv.url }}" class="btn-pixel" download>
               <span class="icon">💾</span> CV
             </a>
           {% endif %}

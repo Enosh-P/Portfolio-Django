@@ -72,7 +72,17 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='profile',
-            name='cv_file',
+            name='cv_file_en',
+            field=models.FileField(blank=True, null=True, upload_to='cv/'),
+        ),
+        migrations.AddField(
+            model_name='profile',
+            name='cv_file_de',
+            field=models.FileField(blank=True, null=True, upload_to='cv/'),
+        ),
+        migrations.AddField(
+            model_name='profile',
+            name='cv_file_ta',
             field=models.FileField(blank=True, null=True, upload_to='cv/'),
         ),
         # Data migration will be in next migration

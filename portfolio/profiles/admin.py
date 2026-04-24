@@ -23,8 +23,8 @@ class ProfileAdmin(admin.ModelAdmin):
             'description': 'Title and Description are required. Hero Statement is optional - a short tagline that appears in bold below your title.'
         }),
         ('Social Links & Files', {
-            'fields': ('linkedin_url', 'github_url', 'cv_file'),
-            'description': 'These appear in the top bar of your portfolio'
+            'fields': ('linkedin_url', 'github_url', 'cv_file_en', 'cv_file_de', 'cv_file_ta'),
+            'description': 'These appear in the top bar and are shared across all profiles. Update once here (language-specific CV files: EN/DE/TA).'
         }),
         ('German Translation (Optional)', {
             'fields': ('title_de', 'hero_statement_de', 'description_de'),
@@ -56,7 +56,7 @@ class ProfileAdmin(admin.ModelAdmin):
             links.append('LinkedIn')
         if obj.github_url:
             links.append('GitHub')
-        if obj.cv_file:
+        if obj.cv_file_en or obj.cv_file_de or obj.cv_file_ta or obj.cv_file:
             links.append('CV')
         return ', '.join(links) if links else 'None'
     has_social_links.short_description = 'Social Links'

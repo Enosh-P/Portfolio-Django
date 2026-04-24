@@ -94,8 +94,15 @@ def home_view(request):
             # Category not found
             content_data['category'] = category_slug
     
+    profile_cv = None
+    if profile:
+        profile_cv = profile.get_cv(language)
+        if not profile_cv:
+            profile_cv = profile.cv_file
+
     context = {
         'profile': profile,
+        'profile_cv': profile_cv,
         'categories': all_categories,
         'current_category': category_slug,
         'current_language': language,

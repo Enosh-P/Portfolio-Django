@@ -35,6 +35,15 @@ class Category(models.Model):
         return name or self.name_en
 
 class Profile(models.Model):
+    TOP_BAR_SHARED_FIELDS = (
+        'linkedin_url',
+        'github_url',
+        'cv_file',
+        'cv_file_en',
+        'cv_file_de',
+        'cv_file_ta',
+    )
+
     slug = models.SlugField(unique=True)
     
     # Social links and CV
@@ -47,6 +56,11 @@ class Profile(models.Model):
     title_en = models.CharField(max_length=100)
     title_de = models.CharField(max_length=100, blank=True)
     title_ta = models.CharField(max_length=100, blank=True)
+
+    # Language-specific cv
+    cv_file_en = models.FileField(upload_to='cv/', blank=True, null=True)
+    cv_file_de = models.FileField(upload_to='cv/', blank=True, null=True)
+    cv_file_ta = models.FileField(upload_to='cv/', blank=True, null=True)
     
     hero_statement_en = models.CharField(max_length=255, blank=True, help_text="A short tagline or statement (e.g., 'Passionate developer building amazing things')")
     hero_statement_de = models.CharField(max_length=255, blank=True)
@@ -59,6 +73,38 @@ class Profile(models.Model):
     # Category mapping
     categories = models.ManyToManyField('Category', blank=True, related_name='profiles',
                                        help_text="Select which categories this profile should be displayed for")
+
+    def save(self, *args, **kwargs):
+        """
+        Keep top-bar fields shared across all profiles.
+        Updating one profile syncs social links/CV files to the rest.
+        """
+        shared_values_before = None
+        if self.pk:
+            shared_values_before = Profile.objects.filter(pk=self.pk).values(
+                *self.TOP_BAR_SHARED_FIELDS
+            ).first()
+
+        super().save(*args, **kwargs)
+
+        shared_values_after = {
+            field: getattr(self, field).name if hasattr(getattr(self, field), 'name') else getattr(self, field)
+            for field in self.TOP_BAR_SHARED_FIELDS
+        }
+
+        if shared_values_before is not None:
+            shared_values_before = {
+                key: (value or '')
+                for key, value in shared_values_before.items()
+            }
+            normalized_after = {
+                key: (value or '')
+                for key, value in shared_values_after.items()
+            }
+            if shared_values_before == normalized_after:
+                return
+
+        Profile.objects.exclude(pk=self.pk).update(**shared_values_after)
 
     def __str__(self):
         return self.title_en
@@ -80,6 +126,12 @@ class Profile(models.Model):
         field_name = f'description_{language}'
         desc = getattr(self, field_name, None)
         return desc or self.description_en
+    
+    def get_cv(self, language='en'):
+        """Get description in specified language"""
+        field_name = f'cv_file_{language}'
+        cv_file = getattr(self, field_name, None)
+        return cv_file or self.cv_file_en
 
 
 class AboutMe(models.Model):
