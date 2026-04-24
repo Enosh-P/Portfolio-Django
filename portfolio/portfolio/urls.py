@@ -29,6 +29,10 @@ urlpatterns = [
     path("profiles/<slug:slug>/", profile_detail, name="profile"),
 ]
 
-# Serve media files in development
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+from django.urls import re_path
+from django.views.static import serve
+
+# Serve media files (for development and simple production)
+urlpatterns += [
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+]
