@@ -19,6 +19,16 @@
   <div class="crt-screen">
     <!-- Top Bar -->
     <div class="top-bar">
+      <button
+        type="button"
+        class="btn-pixel mobile-nav-toggle"
+        id="mobile-nav-toggle"
+        aria-controls="mobile-side-nav"
+        aria-expanded="false"
+        aria-label="Toggle category menu"
+      >
+        ☰ Menu
+      </button>
       <div class="top-bar-left">
         {% if profile %}
           {% if profile_cv %}
@@ -57,7 +67,7 @@
     <!-- Main Container -->
     <div class="main-container">
       <!-- Left Side: Categories Only -->
-      <nav class="side-nav">
+      <nav class="side-nav" id="mobile-side-nav" aria-hidden="false">
         {% for category in categories %}
           <a href="?category={{ category.slug }}{% if current_language %}&lang={{ current_language }}{% endif %}" 
              class="nav-item {% if current_category == category.slug %}active{% endif %}" 
@@ -98,6 +108,7 @@
           </a>
         {% endfor %}
       </nav>
+      <div class="mobile-nav-backdrop" id="mobile-nav-backdrop" aria-hidden="true"></div>
 
       <!-- Right Side: Content and Console -->
       <div class="right-panel">
@@ -124,6 +135,46 @@
   </div>
 
   <script src="{% static 'js/console.js' %}"></script>
+  <script>
+    (function () {
+      const toggle = document.getElementById('mobile-nav-toggle');
+      const nav = document.getElementById('mobile-side-nav');
+      const backdrop = document.getElementById('mobile-nav-backdrop');
+      const mobileMq = window.matchMedia('(max-width: 900px)');
+
+      if (!toggle || !nav || !backdrop) {
+        return;
+      }
+
+      const setNavState = (isOpen) => {
+        nav.classList.toggle('is-open', isOpen);
+        backdrop.classList.toggle('is-visible', isOpen);
+        toggle.setAttribute('aria-expanded', String(isOpen));
+        nav.setAttribute('aria-hidden', String(!isOpen));
+        document.body.classList.toggle('mobile-nav-open', isOpen && mobileMq.matches);
+      };
+
+      toggle.addEventListener('click', () => {
+        const isOpen = nav.classList.contains('is-open');
+        setNavState(!isOpen);
+      });
+
+      backdrop.addEventListener('click', () => setNavState(false));
+
+      nav.addEventListener('click', (event) => {
+        const navItem = event.target.closest('.nav-item');
+        if (navItem && mobileMq.matches) {
+          setNavState(false);
+        }
+      });
+
+      mobileMq.addEventListener('change', (event) => {
+        if (!event.matches) {
+          setNavState(false);
+        }
+      });
+    })();
+  </script>
   {% block extra_js %}{% endblock %}
 </body>
 </html>

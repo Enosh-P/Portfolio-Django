@@ -7,7 +7,7 @@ class ProjectAdmin(admin.ModelAdmin):
     search_fields = ['title_en', 'title_de', 'title_ta', 'description_en', 'company_name_en', 'company_name_de', 'company_name_ta']
     fieldsets = (
         ('Basic Info', {
-            'fields': ('github_url', 'date_from', 'date_to', 'profiles')
+            'fields': ('github_url', 'date_from', 'date_to', 'show_month_year_only', 'profiles')
         }),
         ('English', {
             'fields': ('title_en', 'description_en', 'tech_stack_en', 'company_name_en', 'company_linkedin_url_en')

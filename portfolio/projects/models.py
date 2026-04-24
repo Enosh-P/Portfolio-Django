@@ -4,6 +4,7 @@ from profiles.models import Profile
 class Project(models.Model):
     date_from = models.DateField(blank=True, null=True)
     date_to = models.DateField(blank=True, null=True)
+    show_month_year_only = models.BooleanField(default=False)
 
     # Language-specific fields
     title_en = models.CharField(max_length=100)
