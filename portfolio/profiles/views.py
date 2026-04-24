@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.core.files.storage import default_storage
 from .models import Profile, AboutMe, Category
 from projects.models import Project
 from .utils import get_language_from_request, set_language_in_session
@@ -96,9 +97,18 @@ def home_view(request):
     
     profile_cv = None
     if profile:
-        profile_cv = profile.get_cv(language)
-        if not profile_cv:
-            profile_cv = profile.cv_file
+        # Only expose a CV file if the underlying media file exists.
+        candidate_cvs = [
+            profile.get_cv(language),
+            profile.cv_file,
+            profile.cv_file_en,
+            profile.cv_file_de,
+            profile.cv_file_ta,
+        ]
+        for candidate in candidate_cvs:
+            if candidate and getattr(candidate, "name", None) and default_storage.exists(candidate.name):
+                profile_cv = candidate
+                break
 
     context = {
         'profile': profile,
