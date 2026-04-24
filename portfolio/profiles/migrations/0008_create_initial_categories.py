@@ -8,7 +8,7 @@ def create_initial_categories(apps, schema_editor):
     
     # Create special categories
     categories_data = [
-        {'slug': 'about-me', 'name_en': 'About Me', 'icon': '💾', 'order': 0, 'category_type': 'special'},
+        {'slug': 'about-me', 'name_en': 'About Me', 'icon': '👦🏻', 'order': 0, 'category_type': 'special'},
         {'slug': 'open-source', 'name_en': 'Open Sourced Projects', 'icon': '📦', 'order': 1, 'category_type': 'special'},
         {'slug': 'education', 'name_en': 'Education', 'icon': '🎓', 'order': 5, 'category_type': 'special'},
         {'slug': 'skills', 'name_en': 'Skills', 'icon': '🛠️', 'order': 6, 'category_type': 'special'},

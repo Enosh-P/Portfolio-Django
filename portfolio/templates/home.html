@@ -36,6 +36,42 @@
       {% for project in content_data.projects %}
         <div class="project-card">
           <h3>{% if current_language == 'de' and project.title_de %}{{ project.title_de }}{% elif current_language == 'ta' and project.title_ta %}{{ project.title_ta }}{% else %}{{ project.title_en }}{% endif %}</h3>
+          {% if project.date_from or project.date_to %}
+            <p>
+              <strong>Date:</strong>
+              {% if project.date_from %}{{ project.date_from }}{% endif %}
+              {% if project.date_from and project.date_to %} - {% endif %}
+              {% if project.date_to %}{{ project.date_to }}{% endif %}
+            </p>
+          {% endif %}
+          {% if current_language == 'de' and project.company_name_de %}
+            <p>
+              <strong>Company:</strong>
+              {% if project.company_linkedin_url_de %}
+                <a href="{{ project.company_linkedin_url_de }}" target="_blank" rel="noopener noreferrer">{{ project.company_name_de }}</a>
+              {% else %}
+                {{ project.company_name_de }}
+              {% endif %}
+            </p>
+          {% elif current_language == 'ta' and project.company_name_ta %}
+            <p>
+              <strong>Company:</strong>
+              {% if project.company_linkedin_url_ta %}
+                <a href="{{ project.company_linkedin_url_ta }}" target="_blank" rel="noopener noreferrer">{{ project.company_name_ta }}</a>
+              {% else %}
+                {{ project.company_name_ta }}
+              {% endif %}
+            </p>
+          {% elif project.company_name_en %}
+            <p>
+              <strong>Company:</strong>
+              {% if project.company_linkedin_url_en %}
+                <a href="{{ project.company_linkedin_url_en }}" target="_blank" rel="noopener noreferrer">{{ project.company_name_en }}</a>
+              {% else %}
+                {{ project.company_name_en }}
+              {% endif %}
+            </p>
+          {% endif %}
           <p>{% if current_language == 'de' and project.description_de %}{{ project.description_de|linebreaks }}{% elif current_language == 'ta' and project.description_ta %}{{ project.description_ta|linebreaks }}{% else %}{{ project.description_en|linebreaks }}{% endif %}</p>
           <div class="tech-stack">
             <strong>Tech Stack:</strong> {% if current_language == 'de' and project.tech_stack_de %}{{ project.tech_stack_de }}{% elif current_language == 'ta' and project.tech_stack_ta %}{{ project.tech_stack_ta }}{% else %}{{ project.tech_stack_en }}{% endif %}
@@ -79,6 +115,42 @@
         {% for project in content_data.projects %}
           <div class="project-card">
             <h3>{% if current_language == 'de' and project.title_de %}{{ project.title_de }}{% elif current_language == 'ta' and project.title_ta %}{{ project.title_ta }}{% else %}{{ project.title_en }}{% endif %}</h3>
+            {% if project.date_from or project.date_to %}
+              <p>
+                <strong>Date:</strong>
+                {% if project.date_from %}{{ project.date_from }}{% endif %}
+                {% if project.date_from and project.date_to %} - {% endif %}
+                {% if project.date_to %}{{ project.date_to }}{% endif %}
+              </p>
+            {% endif %}
+            {% if current_language == 'de' and project.company_name_de %}
+              <p>
+                <strong>Company:</strong>
+                {% if project.company_linkedin_url_de %}
+                  <a href="{{ project.company_linkedin_url_de }}" target="_blank" rel="noopener noreferrer">{{ project.company_name_de }}</a>
+                {% else %}
+                  {{ project.company_name_de }}
+                {% endif %}
+              </p>
+            {% elif current_language == 'ta' and project.company_name_ta %}
+              <p>
+                <strong>Company:</strong>
+                {% if project.company_linkedin_url_ta %}
+                  <a href="{{ project.company_linkedin_url_ta }}" target="_blank" rel="noopener noreferrer">{{ project.company_name_ta }}</a>
+                {% else %}
+                  {{ project.company_name_ta }}
+                {% endif %}
+              </p>
+            {% elif project.company_name_en %}
+              <p>
+                <strong>Company:</strong>
+                {% if project.company_linkedin_url_en %}
+                  <a href="{{ project.company_linkedin_url_en }}" target="_blank" rel="noopener noreferrer">{{ project.company_name_en }}</a>
+                {% else %}
+                  {{ project.company_name_en }}
+                {% endif %}
+              </p>
+            {% endif %}
             <p>{% if current_language == 'de' and project.description_de %}{{ project.description_de|linebreaks }}{% elif current_language == 'ta' and project.description_ta %}{{ project.description_ta|linebreaks }}{% else %}{{ project.description_en|linebreaks }}{% endif %}</p>
             <div class="tech-stack">
               <strong>Tech Stack:</strong> {% if current_language == 'de' and project.tech_stack_de %}{{ project.tech_stack_de }}{% elif current_language == 'ta' and project.tech_stack_ta %}{{ project.tech_stack_ta }}{% else %}{{ project.tech_stack_en }}{% endif %}

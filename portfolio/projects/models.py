@@ -2,6 +2,9 @@ from django.db import models
 from profiles.models import Profile
 
 class Project(models.Model):
+    date_from = models.DateField(blank=True, null=True)
+    date_to = models.DateField(blank=True, null=True)
+
     # Language-specific fields
     title_en = models.CharField(max_length=100)
     title_de = models.CharField(max_length=100, blank=True)
@@ -14,6 +17,13 @@ class Project(models.Model):
     tech_stack_en = models.CharField(max_length=200)
     tech_stack_de = models.CharField(max_length=200, blank=True)
     tech_stack_ta = models.CharField(max_length=200, blank=True)
+
+    company_name_en = models.CharField(max_length=150, blank=True)
+    company_name_de = models.CharField(max_length=150, blank=True)
+    company_name_ta = models.CharField(max_length=150, blank=True)
+    company_linkedin_url_en = models.URLField(blank=True)
+    company_linkedin_url_de = models.URLField(blank=True)
+    company_linkedin_url_ta = models.URLField(blank=True)
     
     github_url = models.URLField(blank=True)
     profiles = models.ManyToManyField(Profile)
@@ -38,3 +48,15 @@ class Project(models.Model):
         field_name = f'tech_stack_{language}'
         tech = getattr(self, field_name, None)
         return tech or self.tech_stack_en
+
+    def get_company_name(self, language='en'):
+        """Get company name in specified language"""
+        field_name = f'company_name_{language}'
+        name = getattr(self, field_name, None)
+        return name or self.company_name_en
+
+    def get_company_linkedin_url(self, language='en'):
+        """Get company LinkedIn URL in specified language"""
+        field_name = f'company_linkedin_url_{language}'
+        url = getattr(self, field_name, None)
+        return url or self.company_linkedin_url_en
