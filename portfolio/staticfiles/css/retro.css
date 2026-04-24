@@ -85,7 +85,7 @@ body {
   position: relative;
 }
 
-.mobile-nav-toggle {
+.btn-pixel.mobile-nav-toggle {
   display: none;
 }
 
@@ -348,7 +348,8 @@ body {
   .about-me-image {
     width: 100%;
     max-width: 300px;
-    margin: 0 auto;
+    margin: 0 auto 20px auto;
+    order: -1;
   }
 }
 
@@ -530,17 +531,18 @@ body {
     padding: 12px;
   }
 
-  .mobile-nav-toggle {
+  .btn-pixel.mobile-nav-toggle {
     display: inline-block;
     font-size: 11px;
     padding: 6px 10px;
   }
 
   .top-bar-left {
-    order: 3;
+    order: 4;
     width: 100%;
     gap: 8px;
     flex-wrap: wrap;
+    justify-content: center;
   }
 
   .top-bar-center {
@@ -553,10 +555,12 @@ body {
   }
 
   .top-bar-right {
-    order: 2;
+    order: 3;
     position: static;
     transform: none;
-    margin-left: auto;
+    width: 100%;
+    justify-content: center;
+    margin-left: 0;
   }
 
   .site-title {
