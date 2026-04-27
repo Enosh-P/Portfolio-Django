@@ -79,7 +79,6 @@
           <div class="tech-stack">
             <strong>Tech Stack:</strong> {% if current_language == 'de' and project.tech_stack_de %}{{ project.tech_stack_de }}{% elif current_language == 'ta' and project.tech_stack_ta %}{{ project.tech_stack_ta }}{% else %}{{ project.tech_stack_en }}{% endif %}
           </div>
-          <p>{% if current_language == 'de' and project.description_de %}{{ project.description_de|linebreaks }}{% elif current_language == 'ta' and project.description_ta %}{{ project.description_ta|linebreaks }}{% else %}{{ project.description_en|linebreaks }}{% endif %}</p>
           {% if project.github_url %}
             <a href="{{ project.github_url }}" target="_blank" class="btn-pixel github-link" style="margin-top: 10px; display: inline-flex; align-items: center; gap: 8px;" rel="noopener noreferrer">
               <img src="{% static 'images/github-icon.svg' %}" alt="GitHub" class="github-icon-img" style="width: 18px; height: 18px;">
@@ -92,15 +91,12 @@
               <span>Demo</span>
             </a>
           {% endif %}
+          <p>{% if current_language == 'de' and project.description_de %}{{ project.description_de|linebreaks }}{% elif current_language == 'ta' and project.description_ta %}{{ project.description_ta|linebreaks }}{% else %}{{ project.description_en|linebreaks }}{% endif %}</p>
         </div>
       {% endfor %}
     {% else %}
       <p>No open source projects available.</p>
     {% endif %}
-    
-  {% elif content_data.category == 'education' %}
-    <h1>Education</h1>
-    <p>Education content coming soon...</p>
     
   {% elif content_data.category == 'skills' %}
     <h1>Skills</h1>
