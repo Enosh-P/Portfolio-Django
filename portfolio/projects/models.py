@@ -27,6 +27,7 @@ class Project(models.Model):
     company_linkedin_url_ta = models.URLField(blank=True)
     
     github_url = models.URLField(blank=True)
+    demo_url = models.URLField(blank=True)
     profiles = models.ManyToManyField(Profile)
 
     def __str__(self):

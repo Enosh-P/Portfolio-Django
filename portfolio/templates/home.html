@@ -86,6 +86,12 @@
               <span>GitHub</span>
             </a>
           {% endif %}
+          {% if project.demo_url %}
+            <a href="{{ project.demo_url }}" target="_blank" class="btn-pixel demo-link" style="margin-top: 10px; margin-left: 10px; display: inline-flex; align-items: center; gap: 8px;" rel="noopener noreferrer">
+              <span class="icon">🚀</span>
+              <span>Demo</span>
+            </a>
+          {% endif %}
         </div>
       {% endfor %}
     {% else %}
@@ -162,6 +168,11 @@
             {% if project.github_url %}
               <a href="{{ project.github_url }}" target="_blank" class="btn-pixel" style="margin-top: 10px; display: inline-block;" rel="noopener noreferrer">
                 View on GitHub
+              </a>
+            {% endif %}
+            {% if project.demo_url %}
+              <a href="{{ project.demo_url }}" target="_blank" class="btn-pixel" style="margin-top: 10px; margin-left: 10px; display: inline-block;" rel="noopener noreferrer">
+                View Demo
               </a>
             {% endif %}
             <div class="tech-stack">
