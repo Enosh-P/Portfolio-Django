@@ -58,9 +58,9 @@ class Profile(models.Model):
     title_ta = models.CharField(max_length=100, blank=True)
 
     # Language-specific cv
-    cv_file_en = models.FileField(upload_to='cv/', blank=True, null=True)
-    cv_file_de = models.FileField(upload_to='cv/', blank=True, null=True)
-    cv_file_ta = models.FileField(upload_to='cv/', blank=True, null=True)
+    cv_file_en = models.FileField(upload_to='cv/', blank=True, null=True, default='cv/Enosh_CV.pdf')
+    cv_file_de = models.FileField(upload_to='cv/', blank=True, null=True, default='cv/Enosh_lebenslauf.pdf')
+    cv_file_ta = models.FileField(upload_to='cv/', blank=True, null=True, default='cv/Enosh_CV.pdf')
     
     hero_statement_en = models.CharField(max_length=255, blank=True, help_text="A short tagline or statement (e.g., 'Passionate developer building amazing things')")
     hero_statement_de = models.CharField(max_length=255, blank=True)
