@@ -131,6 +131,15 @@ class Profile(models.Model):
         """Get description in specified language"""
         field_name = f'cv_file_{language}'
         cv_file = getattr(self, field_name, None)
+        if language == 'de':
+            self.cv_file_de = "cv/Enosh_lebenslauf.pdf"
+            return self.cv_file_de
+        if language == 'en':
+            self.cv_file_en = "cv/Enosh_CV.pdf"
+            return self.cv_file_en
+        if language == 'ta':
+            self.cv_file_ta = "cv/Enosh_CV.pdf"
+            return self.cv_file_ta
         return cv_file or self.cv_file_en
 
 
