@@ -19,12 +19,18 @@ class SupabaseStorage(Storage):
     """
     def __init__(self, bucket_name=None, supabase_url=None, supabase_key=None):
         self.supabase_url = supabase_url or os.environ.get("SUPABASE_URL")
-        # Strip trailing slash from URL if present
+        # Strip trailing slash and quotes from URL if present
         if self.supabase_url:
-            self.supabase_url = self.supabase_url.rstrip('/')
+            self.supabase_url = self.supabase_url.strip('"\'').rstrip('/')
             
         self.supabase_key = supabase_key or os.environ.get("SUPABASE_KEY")
+        if self.supabase_key:
+            self.supabase_key = self.supabase_key.strip('"\'')
+            
         self.bucket_name = bucket_name or os.environ.get("SUPABASE_BUCKET_NAME", "Portfolio_bucket")
+        if self.bucket_name:
+            self.bucket_name = self.bucket_name.strip('"\'')
+
         
         # Check if we have the minimum configuration for Supabase
         if not self.supabase_url or not self.supabase_key or self.supabase_key == "your_service_role_key_here":
